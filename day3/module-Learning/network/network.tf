@@ -15,6 +15,7 @@ resource "aws_internet_gateway" "igw1" {
 resource "aws_subnet" "s1" {
   vpc_id = aws_vpc.vpc1.id
   cidr_block = var.subnet_cidr
+  availability_zone = var.azone
   map_public_ip_on_launch = true
   tags = {
         Name = "trainer-subnet-modules"
@@ -40,14 +41,22 @@ resource "aws_route_table_association" "ra1" {
   
 }
 
+# resource "aws_security_group" "sg1" {
+#   name = var.sgname
+#   vpc_id = aws_vpc.vpc1.id
+#   ingress = [{
+#     from_port = 22
+#     to_port = 22
+#     protocol = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
 
-resource "aws_security_group" "sg1" {
-  name = var.sgname
-  vpc_id = aws_vpc.vpc1.id
-  ingress = {
-    from_port = 80
-    to_port = 80
-    protocol ="tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
+#   },
+#   {
+#     from_port = 80
+#     to_port = 80
+#     protocol = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   } 
+ 
+#   ]
+# }
