@@ -1,0 +1,61 @@
+# Define Stages
+stages:
+- validate
+- test
+- plan
+- apply 
+- destroy
+
+# Define Variables
+variables:
+  TF_ROOT: "${CI_PROJECT_DIR}"
+  TF_IN_AUTOMATION: "true"
+ 
+# Define base image for runner 
+default:
+  image:
+    name: hashicorp/terraform:1.16
+    entrypoint: [""]
+  before_script:
+  - cd $TF_ROOT
+  - terraform init
+  after_script:
+  - echo "ThankYou"
+
+# First Job
+terraform_validate_job: # this is job
+  stage: validate
+  script:
+    - terraform fmt
+    - terraform validate
+# Second Job
+
+plan_generate:
+  stage: plan
+  dependencies:
+    - terraform_validate_job
+  script: 
+  - terraform plan -out=pipeline.tfplan
+  - echo "Hello World"
+  - uptime
+  - hostname
+  - date
+  artifacts:
+    name: tfplan
+    paths: 
+    - ${TF_ROOT}/pipeline.tfplan
+    expire_in: 1 day
+
+apply_job:
+  stage: apply
+  script:
+  - terraform apply -input=false pipeline.tfplan
+  dependencies:
+    - plan_generate
+  when: manual
+
+tf_destroy:
+  stage: destroy
+  script:
+    - terraform destroy -auto-approve
+  when: manual
