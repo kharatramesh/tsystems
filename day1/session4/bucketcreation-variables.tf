@@ -1,6 +1,6 @@
 variable "bcreation" {
   type = map(object({
-    banme = string
+    bname = string
     pname = string
     env   = string
   }))
