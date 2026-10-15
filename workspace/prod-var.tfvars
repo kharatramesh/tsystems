@@ -1,0 +1,7 @@
+location = "ap-south-1"
+akey     = ""
+skey     = ""
+bname    = "prod-tsystems-b1-project1"
+amiid    = "ami-0cede6fe40e6ac719"
+itype    = "t2.medium"
+tgname   = "prodvm-project1"
