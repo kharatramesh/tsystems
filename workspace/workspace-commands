@@ -1,0 +1,31 @@
+500  terraform workspace new dev
+  501  terraform workspace ls
+  502  terraform workspace list
+  503  terraform workspace new uat
+  504  terraform workspace new prod
+  505  terraform workspace list
+  506  terraform workspace select dev
+  507  terraform init
+  508  terraform fmt
+  509  terraform validate
+  510  terraform apply -var-file=dev-var.tfvars
+  511  terraform workspace select uat
+  512  terraform apply -var-file=uat-var.tfvars
+  513  terraform workspace select prod
+  514  terraform apply -var-file=prod-var.tfvars
+  515  clear
+  516  terraform workspace select dev
+  517  terraform fmt
+  518  terraform validate
+  519  terraform validate
+  520  terraform apply -var-file=dev-var.tfvars
+  521  terraform workspace select uat
+  522  terraform apply -var-file=uat-var.tfvars
+  523  terraform workspace select prod
+  524  terraform apply -var-file=prod-var.tfvars
+  525  terraform destory -var-file=prod-var.tfvars
+  526  terraform destroy -var-file=prod-var.tfvars
+  527  terraform workspace select dev
+  528  terraform destroy -var-file=dev-var.tfvars
+  529  terraform workspace select uat
+  530  terraform destroy -var-file=uat-var.tfvars
