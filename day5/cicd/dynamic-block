@@ -1,0 +1,23 @@
+
+variable "rules" {
+  description = "adding sgrs "  
+  type = list(object({description=string, from_port=number,to_port=8089,protocol=string,cidr_blocks=list(string)}))
+  default = [ {description = "Allow ssh", from_port = 22, to_port = 22, protocol = "tcp",cidr_blocks = [ "0.0.0.0/0" ]},
+              {description = "Allow 22", from_port = 80, to_port = 80, protocol = "tcp",cidr_blocks = [ "0.0.0.0/0" ]},
+              {description = "Allow 443", from_port = 443, to_port = 443, protocol = "tcp",cidr_blocks = [ "0.0.0.0/0" ]},
+              {description = "Allow 3306", from_port = 3306, to_port = 3306, protocol = "tcp",cidr_blocks = [ "0.0.0.0/0" ]},
+              {description = "Allow dns", from_port = 53, to_port = 53, protocol = "tcp",cidr_blocks = [ "0.0.0.0/0" ]} ]
+}
+
+resource "aws_security_group" "sg1" {
+  name = "test-dynamic"
+  vpc_id = aws_vpc.vpc1.id
+  dynamic "ingress" {
+    for_each = var.rules
+    content {
+      description = ingress.value.description
+      from_port = ingress.value.port
+      to_port = ingress.value.port
+      protocol = ingress.value.protocol
+      cidr_blocks = ingress.value.cidr_blocks
+    }
